@@ -15,9 +15,9 @@ RSpec.configure do |config|
 
   # The before and after blocks must run instantaneously, because Capybara
   # might not actually be used in all examples where it's included.
-  config.after do
+  config.after do |example|
     if self.class.include?(Capybara::DSL)
-      Capybara.reset_sessions!
+      Capybara.reset_sessions! unless example.metadata[:share_session]
       Capybara.use_default_driver
     end
   end
